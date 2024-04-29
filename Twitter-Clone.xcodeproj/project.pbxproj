@@ -9,19 +9,41 @@
 /* Begin PBXBuildFile section */
 		600CD7062BDFB44C004B66CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600CD7052BDFB44C004B66CA /* AppDelegate.swift */; };
 		600CD7082BDFB44C004B66CA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600CD7072BDFB44C004B66CA /* SceneDelegate.swift */; };
-		600CD70A2BDFB44C004B66CA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600CD7092BDFB44C004B66CA /* ViewController.swift */; };
+		600CD70A2BDFB44C004B66CA /* MainTabbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 600CD7092BDFB44C004B66CA /* MainTabbarViewController.swift */; };
 		600CD70F2BDFB44D004B66CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 600CD70E2BDFB44D004B66CA /* Assets.xcassets */; };
 		600CD7122BDFB44D004B66CA /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 600CD7112BDFB44D004B66CA /* Base */; };
+		603A61D92BDFCDE100FE4F08 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603A61D82BDFCDE100FE4F08 /* UIView+Ext.swift */; };
+		603A61DC2BDFCFD200FE4F08 /* TimelineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603A61DB2BDFCFD200FE4F08 /* TimelineCell.swift */; };
+		603A61DF2BDFD07A00FE4F08 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 603A61DE2BDFD07A00FE4F08 /* SnapKit */; };
+		603A61E12BDFD07A00FE4F08 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 603A61E02BDFD07A00FE4F08 /* SnapKit-Dynamic */; };
+		603A61E42BDFD0AF00FE4F08 /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603A61E32BDFD0AF00FE4F08 /* AvatarImageView.swift */; };
+		603A61E62BDFD2E400FE4F08 /* TTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603A61E52BDFD2E400FE4F08 /* TTitleLabel.swift */; };
+		603A61E82BDFD8D600FE4F08 /* TSecondaryTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603A61E72BDFD8D600FE4F08 /* TSecondaryTitleLabel.swift */; };
+		603A61EB2BDFDAA700FE4F08 /* TBodyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603A61EA2BDFDAA700FE4F08 /* TBodyLabel.swift */; };
+		60C212BA2BDFB85D000CA3D8 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C212B92BDFB85D000CA3D8 /* HomeVC.swift */; };
+		60C212BC2BDFB87B000CA3D8 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C212BB2BDFB87B000CA3D8 /* SearchVC.swift */; };
+		60C212BE2BDFB890000CA3D8 /* NotificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C212BD2BDFB890000CA3D8 /* NotificationVC.swift */; };
+		60C212C02BDFB8AD000CA3D8 /* DirectMessagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C212BF2BDFB8AD000CA3D8 /* DirectMessagesVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		600CD7022BDFB44C004B66CA /* Twitter-Clone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Twitter-Clone.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		600CD7052BDFB44C004B66CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		600CD7072BDFB44C004B66CA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		600CD7092BDFB44C004B66CA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		600CD7092BDFB44C004B66CA /* MainTabbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarViewController.swift; sourceTree = "<group>"; };
 		600CD70E2BDFB44D004B66CA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		600CD7112BDFB44D004B66CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		600CD7132BDFB44D004B66CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		603A61D82BDFCDE100FE4F08 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
+		603A61DB2BDFCFD200FE4F08 /* TimelineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineCell.swift; sourceTree = "<group>"; };
+		603A61E32BDFD0AF00FE4F08 /* AvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarImageView.swift; sourceTree = "<group>"; };
+		603A61E52BDFD2E400FE4F08 /* TTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TTitleLabel.swift; sourceTree = "<group>"; };
+		603A61E72BDFD8D600FE4F08 /* TSecondaryTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TSecondaryTitleLabel.swift; sourceTree = "<group>"; };
+		603A61EA2BDFDAA700FE4F08 /* TBodyLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TBodyLabel.swift; sourceTree = "<group>"; };
+		60C212B92BDFB85D000CA3D8 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		60C212BB2BDFB87B000CA3D8 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
+		60C212BD2BDFB890000CA3D8 /* NotificationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationVC.swift; sourceTree = "<group>"; };
+		60C212BF2BDFB8AD000CA3D8 /* DirectMessagesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessagesVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +51,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				603A61DF2BDFD07A00FE4F08 /* SnapKit in Frameworks */,
+				603A61E12BDFD07A00FE4F08 /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,14 +78,88 @@
 		600CD7042BDFB44C004B66CA /* Twitter-Clone */ = {
 			isa = PBXGroup;
 			children = (
-				600CD7052BDFB44C004B66CA /* AppDelegate.swift */,
-				600CD7072BDFB44C004B66CA /* SceneDelegate.swift */,
-				600CD7092BDFB44C004B66CA /* ViewController.swift */,
-				600CD70E2BDFB44D004B66CA /* Assets.xcassets */,
-				600CD7102BDFB44D004B66CA /* LaunchScreen.storyboard */,
+				603A61D72BDFCDD300FE4F08 /* Extenions */,
+				60C212B72BDFB838000CA3D8 /* Views */,
+				60C212B82BDFB847000CA3D8 /* Core */,
+				60C212C12BDFB8E8000CA3D8 /* Support */,
 				600CD7132BDFB44D004B66CA /* Info.plist */,
 			);
 			path = "Twitter-Clone";
+			sourceTree = "<group>";
+		};
+		603A61D72BDFCDD300FE4F08 /* Extenions */ = {
+			isa = PBXGroup;
+			children = (
+				603A61D82BDFCDE100FE4F08 /* UIView+Ext.swift */,
+			);
+			path = Extenions;
+			sourceTree = "<group>";
+		};
+		603A61DA2BDFCF5200FE4F08 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				603A61DB2BDFCFD200FE4F08 /* TimelineCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		603A61E22BDFD09500FE4F08 /* ImageViews */ = {
+			isa = PBXGroup;
+			children = (
+				603A61E32BDFD0AF00FE4F08 /* AvatarImageView.swift */,
+			);
+			path = ImageViews;
+			sourceTree = "<group>";
+		};
+		603A61E92BDFD95F00FE4F08 /* Labels */ = {
+			isa = PBXGroup;
+			children = (
+				603A61E52BDFD2E400FE4F08 /* TTitleLabel.swift */,
+				603A61E72BDFD8D600FE4F08 /* TSecondaryTitleLabel.swift */,
+				603A61EA2BDFDAA700FE4F08 /* TBodyLabel.swift */,
+			);
+			path = Labels;
+			sourceTree = "<group>";
+		};
+		60C212B72BDFB838000CA3D8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				603A61E22BDFD09500FE4F08 /* ImageViews */,
+				603A61DA2BDFCF5200FE4F08 /* Cells */,
+				60C212C22BDFC4F1000CA3D8 /* Tabbar Controllers */,
+				603A61E92BDFD95F00FE4F08 /* Labels */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		60C212B82BDFB847000CA3D8 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				60C212B92BDFB85D000CA3D8 /* HomeVC.swift */,
+				60C212BB2BDFB87B000CA3D8 /* SearchVC.swift */,
+				60C212BD2BDFB890000CA3D8 /* NotificationVC.swift */,
+				60C212BF2BDFB8AD000CA3D8 /* DirectMessagesVC.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		60C212C12BDFB8E8000CA3D8 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				600CD7052BDFB44C004B66CA /* AppDelegate.swift */,
+				600CD7072BDFB44C004B66CA /* SceneDelegate.swift */,
+				600CD70E2BDFB44D004B66CA /* Assets.xcassets */,
+				600CD7102BDFB44D004B66CA /* LaunchScreen.storyboard */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		60C212C22BDFC4F1000CA3D8 /* Tabbar Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				600CD7092BDFB44C004B66CA /* MainTabbarViewController.swift */,
+			);
+			path = "Tabbar Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -80,6 +178,10 @@
 			dependencies = (
 			);
 			name = "Twitter-Clone";
+			packageProductDependencies = (
+				603A61DE2BDFD07A00FE4F08 /* SnapKit */,
+				603A61E02BDFD07A00FE4F08 /* SnapKit-Dynamic */,
+			);
 			productName = "Twitter-Clone";
 			productReference = 600CD7022BDFB44C004B66CA /* Twitter-Clone.app */;
 			productType = "com.apple.product-type.application";
@@ -108,6 +210,9 @@
 				Base,
 			);
 			mainGroup = 600CD6F92BDFB44C004B66CA;
+			packageReferences = (
+				603A61DD2BDFD07A00FE4F08 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 600CD7032BDFB44C004B66CA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -134,9 +239,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				600CD70A2BDFB44C004B66CA /* ViewController.swift in Sources */,
+				603A61D92BDFCDE100FE4F08 /* UIView+Ext.swift in Sources */,
+				603A61EB2BDFDAA700FE4F08 /* TBodyLabel.swift in Sources */,
+				603A61E42BDFD0AF00FE4F08 /* AvatarImageView.swift in Sources */,
+				600CD70A2BDFB44C004B66CA /* MainTabbarViewController.swift in Sources */,
+				60C212BE2BDFB890000CA3D8 /* NotificationVC.swift in Sources */,
+				60C212BC2BDFB87B000CA3D8 /* SearchVC.swift in Sources */,
+				60C212BA2BDFB85D000CA3D8 /* HomeVC.swift in Sources */,
+				60C212C02BDFB8AD000CA3D8 /* DirectMessagesVC.swift in Sources */,
+				603A61DC2BDFCFD200FE4F08 /* TimelineCell.swift in Sources */,
 				600CD7062BDFB44C004B66CA /* AppDelegate.swift in Sources */,
+				603A61E62BDFD2E400FE4F08 /* TTitleLabel.swift in Sources */,
 				600CD7082BDFB44C004B66CA /* SceneDelegate.swift in Sources */,
+				603A61E82BDFD8D600FE4F08 /* TSecondaryTitleLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,6 +464,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		603A61DD2BDFD07A00FE4F08 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		603A61DE2BDFD07A00FE4F08 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 603A61DD2BDFD07A00FE4F08 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		603A61E02BDFD07A00FE4F08 /* SnapKit-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 603A61DD2BDFD07A00FE4F08 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = "SnapKit-Dynamic";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 600CD6FA2BDFB44C004B66CA /* Project object */;
 }
