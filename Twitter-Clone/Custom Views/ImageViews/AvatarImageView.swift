@@ -16,6 +16,14 @@ class AvatarImageView: UIImageView {
         configure()
     }
     
+    convenience init(height: CGFloat) {
+        self.init(frame: .zero)
+        self.snp.makeConstraints { make in
+            make.width.height.equalTo(height)
+        }
+        layer.cornerRadius = height / 2
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -24,7 +32,7 @@ class AvatarImageView: UIImageView {
         contentMode = .scaleAspectFit
         backgroundColor = .secondaryLabel
         tintColor = .label
-        layer.cornerRadius = 24
+//        layer.cornerRadius = 24
         layer.masksToBounds = true
         clipsToBounds = true
         image = placeholderImage

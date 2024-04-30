@@ -17,7 +17,20 @@ class HomeVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureNavigationContoller()
         configureVC()
+    }
+    
+    
+    private func configureNavigationContoller() {
+        let size: CGFloat = 36
+        let logoImageView = UIImageView(frame:  CGRect(x: 0, y: 0, width: size, height: size))
+        logoImageView.contentMode = .scaleAspectFit
+        logoImageView.image = Images.logo
+        navigationItem.titleView = logoImageView
+        
+        let profileImage = UIImage(systemName: "person")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: profileImage, style: .plain, target: self, action: #selector(didTapProfile))
     }
     
     private func configureVC() {
@@ -27,6 +40,12 @@ class HomeVC: UIViewController {
         timelineTableView.dataSource = self
         
         timelineTableView.frame = view.bounds
+    }
+    
+    
+    @objc func didTapProfile() {
+        let destVC = ProfileVC()
+        navigationController?.pushViewController(destVC, animated: true)
     }
     
 
@@ -39,7 +58,6 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TimelineCell.reuseID, for: indexPath) as! TimelineCell
-//        cell.textLabel?.text = "Tweet"
         cell.delegate = self
         return cell
     }

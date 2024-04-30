@@ -21,7 +21,7 @@ class TimelineCell: UITableViewCell {
     
     weak var delegate: TweetInteractionDelegate?
     
-    private let avatarImageView = AvatarImageView(frame: .zero)
+    private let avatarImageView = AvatarImageView(height: 45)
     private let displayNameLabel = TTitleLabel(textAlignment: .left, fontSize: 18)
     private let usernameLabel = TSecondaryTitleLabel(fontSize: 16)
     private let tweetLabel = TBodyLabel(textAlignment: .justified)
@@ -30,29 +30,29 @@ class TimelineCell: UITableViewCell {
     
     private let replyButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "bubble.left"), for: .normal)
+        button.setImage(UIImage(named: "reply"), for: .normal)
         button.tintColor = .systemGray2
         return button
     }()
     
     private let retweetButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "arrow.2.squarepath"), for: .normal)
-        button.tintColor = .systemGray3
+        button.setImage(UIImage(named: "retweet"), for: .normal)
+        button.tintColor = .systemGray2
         return button
     }()
     
     private let likeButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "heart"), for: .normal)
-        button.tintColor = .systemGray3
+        button.setImage(UIImage(named: "like"), for: .normal)
+        button.tintColor = .systemGray2
         return button
     }()
     
     private let shareButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
-        button.tintColor = .systemGray3
+        button.setImage(UIImage(named: "share"), for: .normal)
+        button.tintColor = .systemGray2
         return button
     }()
     
@@ -74,7 +74,7 @@ class TimelineCell: UITableViewCell {
         contentView.addSubviews(avatarImageView, displayNameLabel, usernameLabel, tweetLabel, stackView)
         
         usernameLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        avatarImageView.layer.cornerRadius = 22.5
+//        avatarImageView.layer.cornerRadius = 22.5
         
         displayNameLabel.text = "Barış Sucuoğlu"
         usernameLabel.text = "@barissuc"
@@ -83,7 +83,6 @@ class TimelineCell: UITableViewCell {
         avatarImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(16)
             make.top.equalToSuperview().inset(14)
-            make.height.width.equalTo(45)
         }
         
         displayNameLabel.snp.makeConstraints { make in
@@ -117,7 +116,7 @@ class TimelineCell: UITableViewCell {
         [replyButton, retweetButton, likeButton, shareButton].forEach { button in
             stackView.addArrangedSubview(button)
             button.snp.makeConstraints { make in
-                make.height.width.equalTo(22)
+                make.height.width.equalTo(20)
             }
         }
     }

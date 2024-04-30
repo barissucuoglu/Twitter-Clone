@@ -27,7 +27,7 @@ class TBodyLabel: UILabel {
     
     
     private func configure() {
-        textColor = .secondaryLabel
+        textColor = .label
         font = UIFont.preferredFont(forTextStyle: .body)
         adjustsFontForContentSizeCategory = true
         adjustsFontSizeToFitWidth = true
