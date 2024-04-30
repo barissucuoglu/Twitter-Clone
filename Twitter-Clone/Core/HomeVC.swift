@@ -40,7 +40,28 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TimelineCell.reuseID, for: indexPath) as! TimelineCell
 //        cell.textLabel?.text = "Tweet"
+        cell.delegate = self
         return cell
+    }
+    
+    
+}
+
+extension HomeVC: TweetInteractionDelegate {
+    func didTapReplyButton() {
+        print("Reply")
+    }
+    
+    func didTapRetweetButton() {
+        print("Retweet")
+    }
+    
+    func didTapLikeButton() {
+        print("Like")
+    }
+    
+    func didTapShareButton() {
+        print("Share")
     }
     
     

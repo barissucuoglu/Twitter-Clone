@@ -8,18 +8,59 @@
 import UIKit
 import SnapKit
 
+protocol TweetInteractionDelegate: AnyObject {
+    func didTapReplyButton()
+    func didTapRetweetButton()
+    func didTapLikeButton()
+    func didTapShareButton()
+}
+
 class TimelineCell: UITableViewCell {
 
     static let reuseID = "TimelineCell"
+    
+    weak var delegate: TweetInteractionDelegate?
     
     private let avatarImageView = AvatarImageView(frame: .zero)
     private let displayNameLabel = TTitleLabel(textAlignment: .left, fontSize: 18)
     private let usernameLabel = TSecondaryTitleLabel(fontSize: 16)
     private let tweetLabel = TBodyLabel(textAlignment: .justified)
     
+    private let stackView = UIStackView()
+    
+    private let replyButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "bubble.left"), for: .normal)
+        button.tintColor = .systemGray2
+        return button
+    }()
+    
+    private let retweetButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "arrow.2.squarepath"), for: .normal)
+        button.tintColor = .systemGray3
+        return button
+    }()
+    
+    private let likeButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "heart"), for: .normal)
+        button.tintColor = .systemGray3
+        return button
+    }()
+    
+    private let shareButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
+        button.tintColor = .systemGray3
+        return button
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configure()
+        configureStackView()
+        configureButtons()
     }
     
     
@@ -29,7 +70,8 @@ class TimelineCell: UITableViewCell {
     
     
     private func configure() {
-        addSubviews(avatarImageView, displayNameLabel, usernameLabel, tweetLabel)
+        selectionStyle = .none
+        contentView.addSubviews(avatarImageView, displayNameLabel, usernameLabel, tweetLabel, stackView)
         
         usernameLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         avatarImageView.layer.cornerRadius = 22.5
@@ -58,8 +100,50 @@ class TimelineCell: UITableViewCell {
             make.top.equalTo(displayNameLabel.snp.bottom).offset(10)
             make.leading.equalTo(displayNameLabel.snp.leading)
             make.trailing.equalToSuperview().inset(16)
-            make.bottom.equalToSuperview().inset(16)
         }
+        
+        stackView.snp.makeConstraints { make in
+            make.leading.equalTo(tweetLabel.snp.leading)
+            make.top.equalTo(tweetLabel.snp.bottom).offset(12)
+            make.bottom.equalToSuperview().inset(16)
+            make.trailing.equalTo(tweetLabel.snp.trailing)
+        }
+    }
+    
+    private func configureStackView() {
+        stackView.axis = .horizontal
+        stackView.distribution = .equalSpacing
+        
+        [replyButton, retweetButton, likeButton, shareButton].forEach { button in
+            stackView.addArrangedSubview(button)
+            button.snp.makeConstraints { make in
+                make.height.width.equalTo(22)
+            }
+        }
+    }
+    
+    
+    private func configureButtons() {
+        replyButton.addTarget(self, action: #selector(replyButtonTapped), for: .touchUpInside)
+        retweetButton.addTarget(self, action: #selector(retweetButtonTapped), for: .touchUpInside)
+        likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
+        shareButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc func replyButtonTapped() {
+        delegate?.didTapReplyButton()
+    }
+    
+    @objc func retweetButtonTapped() {
+        delegate?.didTapRetweetButton()
+    }
+    
+    @objc func likeButtonTapped() {
+        delegate?.didTapLikeButton()
+    }
+    
+    @objc func shareButtonTapped() {
+        delegate?.didTapShareButton()
     }
     
 }
