@@ -14,6 +14,11 @@ class HomeVC: UIViewController {
         tableView.register(TimelineCell.self, forCellReuseIdentifier: TimelineCell.reuseID)
         return tableView
     }()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = false
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
