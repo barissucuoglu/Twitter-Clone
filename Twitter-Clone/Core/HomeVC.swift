@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class HomeVC: UIViewController {
     
@@ -24,6 +25,11 @@ class HomeVC: UIViewController {
         super.viewDidLoad()
         configureNavigationContoller()
         configureVC()
+        if Auth.auth().currentUser == nil {
+            let destVC = UINavigationController(rootViewController: OnboardingVC())
+            destVC.modalPresentationStyle = .fullScreen
+            present(destVC, animated: false)
+        }
     }
     
     

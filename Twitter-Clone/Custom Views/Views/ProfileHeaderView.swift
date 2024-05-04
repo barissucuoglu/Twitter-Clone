@@ -61,7 +61,7 @@ class ProfileHeaderView: UIView {
     
     private var indicator: UIView = {
         let view = UIView()
-        view.backgroundColor = .red
+        view.backgroundColor = UIColor(hex: "#1DA1F2")
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
