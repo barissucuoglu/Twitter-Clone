@@ -20,4 +20,11 @@ class AuthManager {
             .map(\.user)
             .eraseToAnyPublisher()
     }
+    
+    
+    func loginUser(with email: String, password: String) -> AnyPublisher<User, Error> {
+        Auth.auth().signIn(withEmail: email, password: password)
+            .map(\.user)
+            .eraseToAnyPublisher()
+    }
 }

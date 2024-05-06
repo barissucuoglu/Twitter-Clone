@@ -19,12 +19,17 @@ class HomeVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
+        checkAuthentication()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigationContoller()
         configureVC()
+    }
+    
+    
+    private func checkAuthentication() {
         if Auth.auth().currentUser == nil {
             let destVC = UINavigationController(rootViewController: OnboardingVC())
             destVC.modalPresentationStyle = .fullScreen
@@ -42,7 +47,10 @@ class HomeVC: UIViewController {
         
         let profileImage = UIImage(systemName: "person")
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: profileImage, style: .plain, target: self, action: #selector(didTapProfile))
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "rectangle.portrait.and.arrow.right"), style: .plain, target: self, action: #selector(didTapSignOut))
     }
+    
     
     private func configureVC() {
         view.backgroundColor = .systemBackground
@@ -58,6 +66,13 @@ class HomeVC: UIViewController {
         let destVC = ProfileVC()
         navigationController?.pushViewController(destVC, animated: true)
     }
+    
+    @objc func didTapSignOut() {
+        try? Auth.auth().signOut()
+        checkAuthentication()
+    }
+    
+    
     
 
 }
@@ -77,6 +92,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension HomeVC: TweetInteractionDelegate {
+    
     func didTapReplyButton() {
         print("Reply")
     }
@@ -92,6 +108,4 @@ extension HomeVC: TweetInteractionDelegate {
     func didTapShareButton() {
         print("Share")
     }
-    
-    
 }

@@ -18,8 +18,9 @@ class TButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience init(height: CGFloat, fontStize: CGFloat) {
+    convenience init(height: CGFloat, fontStize: CGFloat, buttonTitle: String) {
         self.init(frame: .zero)
+        setTitle(buttonTitle, for: .normal)
         layer.cornerRadius = height / 2
         titleLabel?.font = .systemFont(ofSize: fontStize, weight: .bold)
         snp.makeConstraints { make in
@@ -29,7 +30,6 @@ class TButton: UIButton {
     
     
     private func configure() {
-        setTitle("Create Account", for: .normal)
         backgroundColor = UIColor(hex: "#1DA1F2")
         tintColor = .white
         layer.masksToBounds = true

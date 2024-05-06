@@ -20,19 +20,18 @@ class OnboardingVC: UIViewController {
         return button
     }()
     
-    private let createAccountButton = TButton(height: 60, fontStize: 24)
+    private let createAccountButton = TButton(height: 60, fontStize: 24, buttonTitle: "Create Account")
     
     private let termsTextView: UITextView = {
         let attributedString = NSMutableAttributedString(string: "By signing up, you agree to our Terms & Conditions and Privacy Policy, Including Cookie Use.")
-
+        
         let font = UIFont.systemFont(ofSize: 14)
-
-        // Metnin tamamına yazı boyutu ekleme
+        
         attributedString.addAttribute(.font, value: font, range: NSRange(location: 0, length: attributedString.length))
         attributedString.addAttribute(.link, value: "terms://TermsAndConditions", range: (attributedString.string as NSString).range(of: "Terms & Conditions"))
         attributedString.addAttribute(.link, value: "privacy://privacyPolicy", range: (attributedString.string as NSString).range(of: "Privacy Policy"))
         attributedString.addAttribute(.link, value: "cookie://cookieUse", range: (attributedString.string as NSString).range(of: "Cookie Use."))
-
+        
         let textView = UITextView()
         textView.linkTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemBlue]
         textView.backgroundColor = .clear
@@ -42,11 +41,11 @@ class OnboardingVC: UIViewController {
         textView.isEditable = false
         textView.delaysContentTouches = false
         textView.isScrollEnabled = false
-
+        
         return textView
-
+        
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureVC()
@@ -65,7 +64,8 @@ class OnboardingVC: UIViewController {
         loginLabel.text = "Have an account already?"
         loginLabel.tintColor = .gray
         
-        createAccountButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+        createAccountButton.addTarget(self, action: #selector(didTapRegisterButton), for: .touchUpInside)
+        loginButton.addTarget(self, action: #selector(didTapLoginButton), for: .touchUpInside)
         
         welcomeLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
@@ -74,7 +74,7 @@ class OnboardingVC: UIViewController {
         
         createAccountButton.snp.makeConstraints { make in
             make.top.equalTo(welcomeLabel.snp.bottom).offset(20)
-//            make.height.equalTo(60)
+            //            make.height.equalTo(60)
             make.horizontalEdges.equalToSuperview().inset(40)
         }
         
@@ -96,11 +96,17 @@ class OnboardingVC: UIViewController {
         }
     }
     
-    @objc func didTapButton() {
+    @objc func didTapRegisterButton() {
         let destVC = RegisterVC()
         navigationController?.pushViewController(destVC, animated: true)
     }
-
+    
+    @objc func didTapLoginButton() {
+        let destVC = LoginVC()
+        navigationController?.pushViewController(destVC, animated: true)
+        
+    }
+    
 }
 
 extension OnboardingVC: UITextViewDelegate {

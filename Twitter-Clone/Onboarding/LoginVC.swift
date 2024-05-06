@@ -1,22 +1,22 @@
 //
-//  RegisterVC.swift
+//  LoginVC.swift
 //  Twitter-Clone
 //
-//  Created by Barış Sucuoğlu on 5.05.2024.
+//  Created by Barış Sucuoğlu on 6.05.2024.
 //
 
 import UIKit
 import Combine
 
-class RegisterVC: UIViewController {
+class LoginVC: UIViewController {
     
     private var viewModel = AuthenticationViewModel()
     private var subscriptions: Set<AnyCancellable> = []
     
-    private let registerTitleLabel = TTitleLabel(textAlignment: .left, fontSize: 32)
+    private let loginTitleLabel = TTitleLabel(textAlignment: .left, fontSize: 32)
     private let emailTextField = TTextField(textfieldType: .email)
     private let passwordTextField = TTextField(textfieldType: .password)
-    private let registerButton = TButton(height: 50, fontStize: 16, buttonTitle: "Create Account")
+    private let loginButton = TButton(height: 50, fontStize: 16, buttonTitle: "Login")
     
     @objc private func didChangeEmailField() {
         viewModel.email = emailTextField.text
@@ -34,7 +34,7 @@ class RegisterVC: UIViewController {
         
         viewModel.$isAuthenticationFormValid.sink { [weak self] validationState in
             guard let self = self else { return }
-            self.registerButton.isEnabled = validationState
+            self.loginButton.isEnabled = validationState
         }.store(in: &subscriptions)
         
         viewModel.$user.sink { [weak self] user in
@@ -44,16 +44,17 @@ class RegisterVC: UIViewController {
             onboardingVC.dismiss(animated: true)
         }.store(in: &subscriptions)
         
+        
         viewModel.$error.sink { [weak self] errorState in
             guard let error = errorState else { return }
             self?.presentAlert(with: error)
         }.store(in: &subscriptions)
     }
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureVC()
-        configureDismissKeyboard()
         bindViews()
     }
     
@@ -65,28 +66,22 @@ class RegisterVC: UIViewController {
         present(alert, animated: true)
     }
     
-    
-    private func configureDismissKeyboard() {
-        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
-        view.addGestureRecognizer(tap)
-    }
-    
-    
+
     private func configureVC() {
         view.backgroundColor = .systemBackground
-        view.addSubviews(registerTitleLabel, emailTextField, passwordTextField, registerButton)
+        view.addSubviews(loginTitleLabel, emailTextField, passwordTextField, loginButton)
         
-        registerTitleLabel.text = "Create your account"
-        registerButton.addTarget(self, action: #selector(didButtonRegisterTap), for: .touchUpInside)
-        registerButton.isEnabled = false
+        loginTitleLabel.text = "Login to your account"
+        loginButton.addTarget(self, action: #selector(didButtonLoginTap), for: .touchUpInside)
+        loginButton.isEnabled = false
         
-        registerTitleLabel.snp.makeConstraints { make in
+        loginTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
             make.centerX.equalToSuperview()
         }
         
         emailTextField.snp.makeConstraints { make in
-            make.top.equalTo(registerTitleLabel.snp.bottom).offset(16)
+            make.top.equalTo(loginTitleLabel.snp.bottom).offset(16)
             make.horizontalEdges.equalToSuperview().inset(16)
             make.height.equalTo(60)
         }
@@ -97,16 +92,15 @@ class RegisterVC: UIViewController {
             make.height.equalTo(60)
         }
         
-        registerButton.snp.makeConstraints { make in
+        loginButton.snp.makeConstraints { make in
             make.top.equalTo(passwordTextField.snp.bottom).offset(16)
             make.trailing.equalToSuperview().inset(32)
             make.width.equalTo(180)
         }
     }
     
-    
-    @objc func didButtonRegisterTap() {
-        viewModel.createUser()
+    @objc func didButtonLoginTap() {
+        viewModel.loginUser()
     }
 
 }

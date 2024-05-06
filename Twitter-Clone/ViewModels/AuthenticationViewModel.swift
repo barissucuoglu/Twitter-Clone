@@ -9,24 +9,23 @@ import Foundation
 import Firebase
 import Combine
 
-final class RegisterViewModel: ObservableObject {
+final class AuthenticationViewModel: ObservableObject {
     
     @Published var email: String?
     @Published var password: String?
-    @Published var isRegistrationFormValid: Bool = false
+    @Published var isAuthenticationFormValid: Bool = false
     @Published var user: User?
+    @Published var error: String?
     
     private var subscriptions: Set<AnyCancellable> = []
     
-    
-    func validateRegistrationForm() {
+    func validateAuthenticationForm() {
         guard let email = email,
               let password = password else {
-            isRegistrationFormValid = false
+            isAuthenticationFormValid = false
             return
         }
-        isRegistrationFormValid = isValidEmail(for: email) && password.count >= 8
-        
+        isAuthenticationFormValid = isValidEmail(for: email) && password.count >= 8
     }
     
     func isValidEmail(for email: String) -> Bool {
@@ -36,16 +35,37 @@ final class RegisterViewModel: ObservableObject {
         return emailPred.evaluate(with: email)
     }
     
+    
     func createUser() {
         guard let email = email,
               let password = password else { return }
         
         AuthManager.shared.registerUser(with: email, password: password)
-            .sink { _ in
+            .sink { [weak self] completed in
+                
+                if case .failure(let error) = completed {
+                    self?.error = error.localizedDescription
+                }
                 
             } receiveValue: { [weak self] user in
                 self?.user = user
             }.store(in: &subscriptions)
-
+    }
+    
+    
+    func loginUser() {
+        guard let email = email,
+              let password = password else { return }
+        
+        AuthManager.shared.loginUser(with: email, password: password)
+            .sink { [weak self] completed in
+                
+                if case .failure(let error) = completed {
+                    self?.error = error.localizedDescription
+                }
+                
+            } receiveValue: { [weak self] user in
+                self?.user = user
+            }.store(in: &subscriptions)
     }
 }
