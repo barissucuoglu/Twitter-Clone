@@ -7,8 +7,12 @@
 
 import UIKit
 import PhotosUI
+import Combine
 
 class ProfileDataFormVC: UIViewController {
+    
+    private let viewModel = ProfileDataFormViewModel()
+    private var subscriptions: Set<AnyCancellable> = []
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -35,10 +39,32 @@ class ProfileDataFormVC: UIViewController {
         return textView
     }()
     
+    
+    private func bindViews() {
+        displayNameTextField.addTarget(self, action: #selector(didUpdateDisplayName), for: .editingChanged)
+        usernameTextField.addTarget(self, action: #selector(didUpdateUsername), for: .editingChanged)
+        
+        viewModel.$isFormValid.sink { [weak self] validationState in
+            self?.submitButton.isEnabled = validationState
+        }.store(in: &subscriptions)
+    }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureVC()
+        bindViews()
+    }
+    
+    
+    @objc func didUpdateDisplayName() {
+        viewModel.displayName = displayNameTextField.text
+        viewModel.validateUserProfileForm()
+    }
+    
+     @objc func didUpdateUsername() {
+        viewModel.username = usernameTextField.text
+        viewModel.validateUserProfileForm()
     }
     
     
@@ -46,6 +72,9 @@ class ProfileDataFormVC: UIViewController {
         view.backgroundColor = .systemBackground
         view.addSubview(scrollView)
         scrollView.addSubviews(fillTitleLabel, avatarImageView, displayNameTextField, usernameTextField, bioTextView, submitButton)
+        
+        submitButton.isEnabled = false
+        submitButton.addTarget(self, action: #selector(didTapSubmitButton), for: .touchUpInside)
         
         isModalInPresentation = true
         fillTitleLabel.text = "Fill in you data"
@@ -106,13 +135,17 @@ class ProfileDataFormVC: UIViewController {
     
     
     @objc func didTapUpload() {
-        print("Hİİİ")
         var configuration = PHPickerConfiguration()
         configuration.filter = .images
         configuration.selectionLimit = 1
         let photoPicker = PHPickerViewController(configuration: configuration)
         photoPicker.delegate = self
         present(photoPicker, animated: true)
+    }
+    
+    
+    @objc func didTapSubmitButton() {
+        viewModel.uploadAvatar()
     }
     
     
@@ -142,6 +175,12 @@ extension ProfileDataFormVC: UITextViewDelegate, UITextFieldDelegate {
     }
     
     
+    func textViewDidChange(_ textView: UITextView) {
+        viewModel.bio = textView.text
+        viewModel.validateUserProfileForm()
+    }
+    
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         scrollView.setContentOffset(CGPoint(x: 0, y: textField.frame.origin.y - 100), animated: true)
     }
@@ -158,10 +197,13 @@ extension ProfileDataFormVC: PHPickerViewControllerDelegate {
         picker.dismiss(animated: true)
         for result in results {
             result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] object, error in
+                guard let self = self else { return }
                 if let image = object as? UIImage {
                     DispatchQueue.main.async {
-                        self?.avatarImageView.contentMode = .scaleToFill
-                        self?.avatarImageView.image = image
+                        self.avatarImageView.contentMode = .scaleToFill
+                        self.avatarImageView.image = image
+                        self.viewModel.imageData = image
+                        self.viewModel.validateUserProfileForm()
                     }
                 }
             }
