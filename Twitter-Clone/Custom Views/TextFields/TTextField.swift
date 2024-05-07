@@ -12,6 +12,8 @@ class TTextField: UITextField {
     enum TextFieldType {
         case email
         case password
+        case displayName
+        case username
     }
     
     private var textFieldType: TextFieldType!
@@ -33,6 +35,25 @@ class TTextField: UITextField {
             placeholder = "Password"
             textContentType = .oneTimeCode
             isSecureTextEntry = true
+        case .displayName:
+            keyboardType = .default
+            backgroundColor = .secondarySystemFill
+            leftViewMode = .always
+            leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+            layer.masksToBounds = true
+            layer.cornerRadius = 8
+            autocapitalizationType = .words
+            attributedPlaceholder = NSAttributedString(string: "Display Name", attributes: [.foregroundColor: UIColor.systemGray])
+            
+        case .username:
+            keyboardType = .default
+            backgroundColor = .secondarySystemFill
+            leftViewMode = .always
+            leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+            layer.masksToBounds = true
+            layer.cornerRadius = 8
+            attributedPlaceholder = NSAttributedString(string: "Username", attributes: [.foregroundColor: UIColor.systemGray])
+            
         }
     }
     
