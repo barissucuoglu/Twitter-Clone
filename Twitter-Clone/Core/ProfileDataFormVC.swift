@@ -47,6 +47,12 @@ class ProfileDataFormVC: UIViewController {
         viewModel.$isFormValid.sink { [weak self] validationState in
             self?.submitButton.isEnabled = validationState
         }.store(in: &subscriptions)
+        
+        viewModel.$isUserOnboardingDone.sink { [weak self] succes in
+            if succes {
+                self?.dismiss(animated: true)
+            }
+        }.store(in: &subscriptions)
     }
     
 

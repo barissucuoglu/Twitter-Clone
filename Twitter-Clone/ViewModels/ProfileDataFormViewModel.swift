@@ -9,6 +9,7 @@ import UIKit
 import Combine
 import FirebaseStorageCombineSwift
 import FirebaseStorage
+import FirebaseAuth
 
 final class ProfileDataFormViewModel: ObservableObject {
     
@@ -19,9 +20,9 @@ final class ProfileDataFormViewModel: ObservableObject {
     @Published var bio: String?
     @Published var avatarPath: String?
     @Published var imageData: UIImage?
-    @Published var url: URL?
     @Published var isFormValid: Bool = false
-    @Published var error: String?
+    @Published var error: String = ""
+    @Published var isUserOnboardingDone: Bool = false
     
     
     func validateUserProfileForm() {
@@ -51,13 +52,44 @@ final class ProfileDataFormViewModel: ObservableObject {
                 StorageManager.shared.getDownloadURL(for: metaData.path)
             })
             .sink { [weak self] completed in
+                switch completed {
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self?.error = error.localizedDescription
+                    
+                case.finished:
+                    self?.updateUserData()
+                }
+                
+        } receiveValue: { [weak self] url in
+            self?.avatarPath = url.absoluteString
+        }.store(in: &subscriptions)
+    }
+    
+    
+    private func updateUserData() {
+        guard let displayName,
+              let username,
+              let bio,
+              let avatarPath,
+              let id = Auth.auth().currentUser?.uid else { return }
+        
+        let updatedFields: [String: Any] = [
+            "displayName": displayName,
+            "username": username,
+            "bio": bio,
+            "avatarPath": avatarPath,
+            "isUserOnboarded": true
+        ]
+        
+        DatabaseManager.shared.collectionUsers(updateFields: updatedFields, for: id).sink { [weak self] completed in
             if case .failure(let error) = completed {
+                print(error.localizedDescription)
                 self?.error = error.localizedDescription
             }
-        } receiveValue: { [weak self] url in
-            self?.url = url
+        } receiveValue: { [weak self] onboardingState in
+            self?.isUserOnboardingDone = onboardingState
         }.store(in: &subscriptions)
-
     }
     
 }

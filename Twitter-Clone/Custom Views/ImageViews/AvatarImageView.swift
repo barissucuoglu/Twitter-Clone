@@ -31,7 +31,7 @@ class AvatarImageView: UIImageView {
     private func configure() {
         contentMode = .scaleAspectFit
         backgroundColor = .secondaryLabel
-        tintColor = .gray
+        tintColor = .label
 //        layer.cornerRadius = 24
         layer.masksToBounds = true
         clipsToBounds = true
