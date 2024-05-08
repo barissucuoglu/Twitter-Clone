@@ -44,6 +44,7 @@ class ProfileVC: UIViewController {
                 self.headerView.followingCountLabel.text = "\(user.followingCount)"
                 self.headerView.profileImageView.contentMode = .scaleAspectFill
                 self.headerView.profileImageView.sd_setImage(with: URL(string: user.avatarPath))
+                self.headerView.joinedDateLabel.text = "Joined \(self.viewModel.getFormattedDate(from: user.crateOn))"
             }
             
         }.store(in: &subscriptions)

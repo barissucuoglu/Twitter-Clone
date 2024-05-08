@@ -14,6 +14,7 @@ class HomeVC: UIViewController {
     private let viewModel = HomeViewModel()
     private var subscrpition: Set<AnyCancellable> = []
     
+    private let tweetButton = TButton()
     private let timelineTableView: UITableView = {
        let tableView = UITableView()
         tableView.register(TimelineCell.self, forCellReuseIdentifier: TimelineCell.reuseID)
@@ -76,11 +77,21 @@ class HomeVC: UIViewController {
     
     private func configureVC() {
         view.backgroundColor = .systemBackground
-        view.addSubview(timelineTableView)
+        view.addSubviews(timelineTableView, tweetButton)
         timelineTableView.delegate = self
         timelineTableView.dataSource = self
         
         timelineTableView.frame = view.bounds
+        
+        let plusSign = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 18, weight: .bold))
+        tweetButton.setImage(plusSign, for: .normal)
+        tweetButton.addTarget(self, action: #selector(didTapTweetButton), for: .touchUpInside)
+        tweetButton.layer.cornerRadius = 30
+        tweetButton.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().inset(120)
+            make.trailing.equalToSuperview().inset(25)
+            make.width.height.equalTo(60)
+        }
     }
     
     
@@ -94,7 +105,11 @@ class HomeVC: UIViewController {
         checkAuthentication()
     }
     
-    
+    @objc func didTapTweetButton() {
+        let destVC = UINavigationController(rootViewController: TweetComposeVC())
+        destVC.modalPresentationStyle = .fullScreen
+        present(destVC, animated: true)
+    }
     
 
 }
