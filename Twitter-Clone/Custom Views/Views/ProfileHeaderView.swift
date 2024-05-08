@@ -69,16 +69,16 @@ class ProfileHeaderView: UIView {
     private var leadingAnchors =  [NSLayoutConstraint]()
     private var trailingAnchors =  [NSLayoutConstraint]()
     
-    private let followingCountLabel = TTitleLabel(textAlignment: .left, fontSize: 14)
+    var followingCountLabel = TTitleLabel(textAlignment: .left, fontSize: 14)
     private let followingLabel = TSecondaryTitleLabel(fontSize: 14)
-    private let followersCountLabel = TTitleLabel(textAlignment: .left, fontSize: 14)
+    var followersCountLabel = TTitleLabel(textAlignment: .left, fontSize: 14)
     private let followersLabel = TSecondaryTitleLabel(fontSize: 14)
     
     
-    private let profileImageView = AvatarImageView(height: 80)
-    private let nameLabel = TTitleLabel(textAlignment: .left, fontSize: 22)
-    private let usernameLabel = TSecondaryTitleLabel(fontSize: 18)
-    private let bioLabel = TBodyLabel(textAlignment: .justified)
+    var profileImageView = AvatarImageView(height: 80)
+    var nameLabel = TTitleLabel(textAlignment: .left, fontSize: 22)
+    var usernameLabel = TSecondaryTitleLabel(fontSize: 18)
+    var bioLabel = TBodyLabel(textAlignment: .justified)
     
     private let joinDateImageView: UIImageView = {
         let imageView = UIImageView()
@@ -87,7 +87,7 @@ class ProfileHeaderView: UIView {
         return imageView
     }()
     
-    private let joinedDateLabel = TSecondaryTitleLabel(fontSize: 14)
+    var joinedDateLabel = TSecondaryTitleLabel(fontSize: 14)
     
     private let headerImageView: UIImageView = {
         let imageView = UIImageView()
@@ -139,20 +139,14 @@ class ProfileHeaderView: UIView {
         addSubviews(headerImageView, profileImageView, nameLabel, usernameLabel, bioLabel, joinDateImageView,
                     joinedDateLabel, followingCountLabel, followingLabel, followersCountLabel, followersLabel, sectionStackView, indicator)
         headerImageView.image = UIImage(named: "babyYoda")
-        nameLabel.text = "kolparator"
-        usernameLabel.text = "@kolpakrali"
         
         bioLabel.numberOfLines = 3
-        bioLabel.text = "Lorem Ipsum"
         
         joinedDateLabel.text = "Joined 11 February"
         
         followersLabel.text = "Followers"
         followingLabel.text = "Following"
-        
-        followingCountLabel.text = "400"
-        followersCountLabel.text = "200"
-        
+
         for i in 0..<tabs.count {
             let leadingAnchor = indicator.leadingAnchor.constraint(equalTo: sectionStackView.arrangedSubviews[i].leadingAnchor)
             leadingAnchors.append(leadingAnchor)

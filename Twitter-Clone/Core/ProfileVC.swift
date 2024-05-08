@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import Combine
+import SDWebImage
 
 class ProfileVC: UIViewController {
+    
+    private let viewModel = ProfileViewModel()
+    private var subscriptions: Set<AnyCancellable> = []
     
     private let statusBar: UIView = {
        let view = UIView()
@@ -18,16 +23,42 @@ class ProfileVC: UIViewController {
     
     private var isStatusBarHidden = true
     
+    private lazy var headerView = ProfileHeaderView(frame: CGRect(x: 0, y: 0, width: CGFloat.deviceWidth, height: 380))
+    
     private let profileTableView: UITableView = {
        let tableView = UITableView()
         tableView.register(TimelineCell.self, forCellReuseIdentifier: TimelineCell.reuseID)
         return tableView
     }()
     
+    
+    private func bindViews() {
+        viewModel.$user.sink { [weak self] user in
+            guard let self  = self else { return }
+            guard let user = user else { return }
+            DispatchQueue.main.async {
+                self.headerView.nameLabel.text = user.displayName
+                self.headerView.usernameLabel.text = "@\(user.username)"
+                self.headerView.bioLabel.text = user.bio
+                self.headerView.followersCountLabel.text = "\(user.followersCount)"
+                self.headerView.followingCountLabel.text = "\(user.followingCount)"
+                self.headerView.profileImageView.contentMode = .scaleAspectFill
+                self.headerView.profileImageView.sd_setImage(with: URL(string: user.avatarPath))
+            }
+            
+        }.store(in: &subscriptions)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.retrieveUser()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigationController()
         configureVC()
+        bindViews()
     }
     
     
@@ -42,7 +73,7 @@ class ProfileVC: UIViewController {
         view.addSubviews(profileTableView, statusBar)
         profileTableView.delegate = self
         profileTableView.dataSource = self
-        let headerView = ProfileHeaderView(frame: CGRect(x: 0, y: 0, width: CGFloat.deviceWidth, height: 380))
+
         profileTableView.tableHeaderView = headerView
         profileTableView.contentInsetAdjustmentBehavior = .never
         
