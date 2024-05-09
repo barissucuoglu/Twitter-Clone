@@ -11,7 +11,16 @@ import SDWebImage
 
 class ProfileVC: UIViewController {
     
-    private let viewModel = ProfileViewModel()
+    private let viewModel: ProfileViewModel
+    
+    init(viewModel: ProfileViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     private var subscriptions: Set<AnyCancellable> = []
     
     private let statusBar: UIView = {
@@ -23,7 +32,7 @@ class ProfileVC: UIViewController {
     
     private var isStatusBarHidden = true
     
-    private lazy var headerView = ProfileHeaderView(frame: CGRect(x: 0, y: 0, width: CGFloat.deviceWidth, height: 380))
+    private lazy var headerView = ProfileHeaderView(frame: CGRect(x: 0, y: 0, width: profileTableView.frame.width, height: 390))
     
     private let profileTableView: UITableView = {
        let tableView = UITableView()
@@ -46,13 +55,11 @@ class ProfileVC: UIViewController {
                 self.headerView.profileImageView.sd_setImage(with: URL(string: user.avatarPath))
                 self.headerView.joinedDateLabel.text = "Joined \(self.viewModel.getFormattedDate(from: user.crateOn))"
             }
-            
         }.store(in: &subscriptions)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        viewModel.retrieveUser()
+        
+        viewModel.$tweets.sink { [weak self] _ in
+            DispatchQueue.main.async { self?.profileTableView.reloadData() }
+        }.store(in: &subscriptions)
     }
     
     override func viewDidLoad() {
@@ -60,6 +67,7 @@ class ProfileVC: UIViewController {
         configureNavigationController()
         configureVC()
         bindViews()
+        viewModel.retrieveUser()
     }
     
     
@@ -98,12 +106,13 @@ class ProfileVC: UIViewController {
 
 extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        10
+        viewModel.tweets.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TimelineCell.reuseID, for: indexPath) as! TimelineCell
-        
+        let tweet = viewModel.tweets[indexPath.row]
+        cell.set(tweet: tweet)
         return cell
     }
     

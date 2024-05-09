@@ -69,6 +69,8 @@ class ProfileHeaderView: UIView {
     private var leadingAnchors =  [NSLayoutConstraint]()
     private var trailingAnchors =  [NSLayoutConstraint]()
     
+    private let followButton = TButton(height: 40, fontStize: 16, buttonTitle: "Follow")
+    
     var followingCountLabel = TTitleLabel(textAlignment: .left, fontSize: 14)
     private let followingLabel = TSecondaryTitleLabel(fontSize: 14)
     var followersCountLabel = TTitleLabel(textAlignment: .left, fontSize: 14)
@@ -100,6 +102,7 @@ class ProfileHeaderView: UIView {
         super.init(frame: frame)
         configure()
         configureSectionButtons()
+        confiureButtonAsUnfollowed()
     }
     
     required init?(coder: NSCoder) {
@@ -115,6 +118,22 @@ class ProfileHeaderView: UIView {
             }
             button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
         }
+    }
+    
+    
+    private func confiureButtonAsFollowed() {
+        followButton.setTitle("Unfollow", for: .normal)
+        followButton.backgroundColor = .systemBackground
+        followButton.setTitleColor(UIColor(hex: "#1DA1F2"), for: .normal)
+        followButton.layer.borderWidth = 2
+        followButton.layer.borderColor = UIColor(hex: "#1DA1F2").cgColor
+    }
+    
+    
+    private func confiureButtonAsUnfollowed() {
+        followButton.setTitle("Follow", for: .normal)
+        followButton.backgroundColor = UIColor(hex: "#1DA1F2")
+        followButton.layer.borderColor = UIColor.clear.cgColor
     }
     
     @objc func didTapButton(_ sender: UIButton) {
@@ -137,7 +156,7 @@ class ProfileHeaderView: UIView {
     
     private func configure() {
         addSubviews(headerImageView, profileImageView, nameLabel, usernameLabel, bioLabel, joinDateImageView,
-                    joinedDateLabel, followingCountLabel, followingLabel, followersCountLabel, followersLabel, sectionStackView, indicator)
+                    joinedDateLabel, followingCountLabel, followingLabel, followersCountLabel, followersLabel, sectionStackView, indicator, followButton)
         headerImageView.image = UIImage(named: "babyYoda")
         
         bioLabel.numberOfLines = 3
@@ -218,8 +237,14 @@ class ProfileHeaderView: UIView {
         NSLayoutConstraint.activate([
             leadingAnchors[0],
             trailingAnchors[0],
-            indicator.topAnchor.constraint(equalTo: sectionStackView.arrangedSubviews[0].bottomAnchor, constant: -4),
+            indicator.topAnchor.constraint(equalTo: sectionStackView.bottomAnchor, constant: -4),
             indicator.heightAnchor.constraint(equalToConstant: 4)
         ])
+        
+        followButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(20)
+            make.centerY.equalTo(usernameLabel.snp.centerY)
+            make.width.equalTo(120)
+        }
     }
 }

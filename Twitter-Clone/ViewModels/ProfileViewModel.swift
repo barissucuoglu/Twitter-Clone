@@ -13,6 +13,7 @@ final class ProfileViewModel: ObservableObject {
     
     @Published var user: TwitterUser?
     @Published var error: String?
+    @Published var tweets: [Tweet] = []
     
     private var subscription: Set<AnyCancellable> = []
     
@@ -25,6 +26,7 @@ final class ProfileViewModel: ObservableObject {
             }
         } receiveValue: { [weak self] user in
             self?.user = user
+            self?.fetchUserTweets()
         }.store(in: &subscription)
     }
     
@@ -33,5 +35,18 @@ final class ProfileViewModel: ObservableObject {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM YYYY"
         return dateFormatter.string(from: date)
+    }
+    
+    
+    func fetchUserTweets() {
+        guard let user = user else { return }
+        DatabaseManager.shared.collectionTweets(retrieveTweets: user.id).sink { [weak self] completion in
+            if case .failure(let error) = completion {
+                self?.error = error.localizedDescription
+            }
+        } receiveValue: { [weak self] tweets in
+            self?.tweets = tweets
+        }.store(in: &subscription)
+
     }
 }
