@@ -43,6 +43,14 @@ class HomeVC: UIViewController {
                 self?.completedOnboarding()
             }
         }.store(in: &subscrpition)
+        
+        
+        viewModel.$tweets.sink { [weak self] tweets in
+            DispatchQueue.main.async {
+                self?.timelineTableView.reloadData()
+            }
+            
+        }.store(in: &subscrpition)
     }
     
     
@@ -116,12 +124,14 @@ class HomeVC: UIViewController {
 
 extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        200
+        viewModel.tweets.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TimelineCell.reuseID, for: indexPath) as! TimelineCell
         cell.delegate = self
+        let tweet = viewModel.tweets[indexPath.row]
+        cell.set(tweet: tweet)
         return cell
     }
     

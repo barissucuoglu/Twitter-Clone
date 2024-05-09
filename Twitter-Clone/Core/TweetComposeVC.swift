@@ -6,8 +6,14 @@
 //
 
 import UIKit
+import Combine
 
 class TweetComposeVC: UIViewController {
+    
+    private let viewModel = TweetComposeViewModel()
+    private var subscriptions: Set<AnyCancellable> = []
+    
+    let postButton = TButton(height: 32, fontStize: 18, buttonTitle: "Post")
     
     private let tweetContentTextView: UITextView = {
        let textView = UITextView()
@@ -20,20 +26,40 @@ class TweetComposeVC: UIViewController {
         return textView
     }()
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.getUserData()
+    }
+    
+    
+    private func bindViews() {
+        viewModel.$isValidToTweet.sink { [weak self] validState in
+            self?.postButton.isEnabled = validState
+        }.store(in: &subscriptions)
+        
+        viewModel.$shouldDismissComposer.sink { [weak self] succes in
+            if succes {
+                self?.dismiss(animated: true)
+            }
+        }.store(in: &subscriptions)
+    }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigationController()
         configureVC()
+        bindViews()
     }
     
     
     private func configureNavigationController() {
-        navigationController?.navigationBar.layer.cornerRadius = 10
-        let navigationBarHeight = navigationController?.navigationBar.frame.height ?? 44
-        let postButton = TButton(height: navigationBarHeight - 8, fontStize: 18, buttonTitle: "Post")
+        postButton.isEnabled = false
         postButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
         let barButtonItem = UIBarButtonItem(customView: postButton)
+        postButton.addTarget(self, action: #selector(didTapPostButton), for: .touchUpInside)
+        postButton.setTitleColor(.white.withAlphaComponent(0.7), for: .disabled)
         navigationItem.rightBarButtonItem = barButtonItem
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(dismissVC))
     }
@@ -55,6 +81,9 @@ class TweetComposeVC: UIViewController {
     @objc func dismissVC() {
         dismiss(animated: true)
     }
+    @objc func didTapPostButton() {
+        viewModel.dispatchTweet()
+    }
 
 }
 
@@ -72,5 +101,11 @@ extension TweetComposeVC: UITextViewDelegate {
             textView.text = "What's happening?"
             textView.textColor = .gray
         }
+    }
+    
+    
+    func textViewDidChange(_ textView: UITextView) {
+        viewModel.tweetContent = textView.text
+        viewModel.validateToTweet()
     }
 }

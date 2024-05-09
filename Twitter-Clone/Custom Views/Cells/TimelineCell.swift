@@ -69,16 +69,20 @@ class TimelineCell: UITableViewCell {
     }
     
     
+    func set(tweet: Tweet) {
+        displayNameLabel.text = tweet.author.displayName
+        usernameLabel.text = "@\(tweet.author.username)"
+        tweetLabel.text = tweet.tweetContent
+        avatarImageView.sd_setImage(with: URL(string: tweet.author.avatarPath))
+    }
+    
+    
     private func configure() {
         selectionStyle = .none
         contentView.addSubviews(avatarImageView, displayNameLabel, usernameLabel, tweetLabel, stackView)
         
         usernameLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
 //        avatarImageView.layer.cornerRadius = 22.5
-        
-        displayNameLabel.text = "Barış Sucuoğlu"
-        usernameLabel.text = "@barissuc"
-        tweetLabel.text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
         
         avatarImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(16)
