@@ -44,7 +44,6 @@ class ProfileVC: UIViewController {
     private func bindViews() {
         viewModel.$user.sink { [weak self] user in
             guard let self  = self else { return }
-            guard let user = user else { return }
             DispatchQueue.main.async {
                 self.headerView.nameLabel.text = user.displayName
                 self.headerView.usernameLabel.text = "@\(user.username)"
@@ -67,7 +66,7 @@ class ProfileVC: UIViewController {
         configureNavigationController()
         configureVC()
         bindViews()
-        viewModel.retrieveUser()
+        viewModel.fetchUserTweets()
     }
     
     

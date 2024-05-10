@@ -82,7 +82,6 @@ class TimelineCell: UITableViewCell {
         contentView.addSubviews(avatarImageView, displayNameLabel, usernameLabel, tweetLabel, stackView)
         
         usernameLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-//        avatarImageView.layer.cornerRadius = 22.5
         
         avatarImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(16)

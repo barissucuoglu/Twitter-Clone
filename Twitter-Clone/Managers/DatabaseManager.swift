@@ -42,6 +42,18 @@ class DatabaseManager {
     }
     
     
+    func collectionUsers(search query: String) -> AnyPublisher<[TwitterUser], Error> {
+        db.collection(usersPath).whereField("username", isEqualTo: query)
+            .getDocuments()
+            .map(\.documents)
+            .tryMap { snaphots in
+                try snaphots.map {
+                    try $0.data(as: TwitterUser.self)
+                }
+            }.eraseToAnyPublisher()
+    }
+    
+    
     func collectionTweets(dispatch tweet: Tweet) -> AnyPublisher<Bool, Error> {
         db.collection(tweetsPath).document(tweet.id).setData(from: tweet)
             .map { _ in true }

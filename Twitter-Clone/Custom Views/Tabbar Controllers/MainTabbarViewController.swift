@@ -14,7 +14,7 @@ class MainTabbarViewController: UITabBarController {
         view.backgroundColor = .systemBackground
         
         let vc1 = UINavigationController(rootViewController: HomeVC())
-        let vc2 = UINavigationController(rootViewController: SearchVC())
+        let vc2 = UINavigationController(rootViewController: SearchVC(viewModel: SearchViewModel()))
         let vc3 = UINavigationController(rootViewController: NotificationVC())
         let vc4 = UINavigationController(rootViewController: DirectMessagesVC())
         
