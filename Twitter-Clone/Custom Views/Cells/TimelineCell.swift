@@ -24,7 +24,7 @@ class TimelineCell: UITableViewCell {
     private let avatarImageView = AvatarImageView(height: 45)
     private let displayNameLabel = TTitleLabel(textAlignment: .left, fontSize: 18)
     private let usernameLabel = TSecondaryTitleLabel(fontSize: 16)
-    private let tweetLabel = TBodyLabel(textAlignment: .justified)
+    private let tweetLabel = TBodyLabel(textAlignment: .left)
     
     private let stackView = UIStackView()
     
@@ -82,6 +82,7 @@ class TimelineCell: UITableViewCell {
         contentView.addSubviews(avatarImageView, displayNameLabel, usernameLabel, tweetLabel, stackView)
         
         usernameLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        avatarImageView.contentMode = .scaleAspectFill
         
         avatarImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(16)

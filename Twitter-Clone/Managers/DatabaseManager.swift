@@ -18,6 +18,7 @@ class DatabaseManager {
     let db = Firestore.firestore()
     let usersPath: String = "users"
     let tweetsPath: String = "tweets"
+    let followingPath: String = "followings"
     
     
     func collectionUsers(add user: User) -> AnyPublisher<Bool, Error> {
@@ -69,6 +70,40 @@ class DatabaseManager {
                 try snaphots.map {
                     try $0.data(as: Tweet.self)
                 }
+            }.eraseToAnyPublisher()
+    }
+    
+    
+    func collectionFollowings(isFollower: String, following: String) -> AnyPublisher<Bool, Error> {
+        db.collection(followingPath)
+            .whereField("follower", isEqualTo: isFollower)
+            .whereField("following", isEqualTo: following)
+            .getDocuments()
+            .map(\.count)
+            .map {
+                return $0 != 0
+            }.eraseToAnyPublisher()
+    }
+    
+    
+    func collectionFollowings(follower: String, following: String) -> AnyPublisher<Bool, Error> {
+        db.collection(followingPath).document().setData([
+            "follower": follower,
+            "following": following
+        ])
+        .map { true }.eraseToAnyPublisher()
+    }
+    
+    
+    func collectionFollowings(delete follower: String, following: String) -> AnyPublisher<Bool, Error> {
+        db.collection(followingPath)
+            .whereField("follower", isEqualTo: follower)
+            .whereField("following", isEqualTo: following)
+            .getDocuments()
+            .map(\.documents.first)
+            .map { query in
+                query?.reference.delete(completion: nil)
+                return true
             }.eraseToAnyPublisher()
     }
 }

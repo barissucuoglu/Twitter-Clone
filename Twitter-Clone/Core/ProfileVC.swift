@@ -59,6 +59,30 @@ class ProfileVC: UIViewController {
         viewModel.$tweets.sink { [weak self] _ in
             DispatchQueue.main.async { self?.profileTableView.reloadData() }
         }.store(in: &subscriptions)
+        
+        
+        viewModel.$currentFollowingState.sink { [weak self] state in
+            switch state {
+            case .personal:
+                self?.headerView.configureButtonAsPersonal()
+            case .userIsFollowed:
+                self?.headerView.configureButtonAsUnfollow()
+            case .userIsUnfollowed:
+                self?.headerView.configureButtonAsFollow()
+            }
+        }.store(in: &subscriptions)
+        
+        
+        headerView.followedButtonActionPublisher.sink { [weak self] state in
+            switch state {
+            case .userIsFollowed:
+                self?.viewModel.unFollow()
+            case .userIsUnfollowed:
+                self?.viewModel.follow()
+            case .personal:
+                return
+            }
+        }.store(in: &subscriptions)
     }
     
     override func viewDidLoad() {

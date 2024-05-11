@@ -6,8 +6,12 @@
 //
 
 import UIKit
+import Combine
 
 class ProfileHeaderView: UIView {
+    
+    private var currentFollowState: ProfileFollowingState = .personal
+    var followedButtonActionPublisher: PassthroughSubject<ProfileFollowingState, Never> = PassthroughSubject()
     
     private enum SectionButtons: String {
         case posts = "Posts"
@@ -102,7 +106,7 @@ class ProfileHeaderView: UIView {
         super.init(frame: frame)
         configure()
         configureSectionButtons()
-        confiureButtonAsUnfollowed()
+        configureFollowButtonAction()
     }
     
     required init?(coder: NSCoder) {
@@ -121,19 +125,40 @@ class ProfileHeaderView: UIView {
     }
     
     
-    private func confiureButtonAsFollowed() {
+    private func configureFollowButtonAction() {
+        followButton.addTarget(self, action: #selector(didTapFollowButton), for: .touchUpInside)
+    }
+    
+    
+    @objc private func didTapFollowButton() {
+        followedButtonActionPublisher.send(currentFollowState)
+    }
+    
+    
+    func configureButtonAsPersonal() {
+        followButton.isHidden = true
+        currentFollowState = .personal
+    }
+    
+    
+    func configureButtonAsUnfollow() {
         followButton.setTitle("Unfollow", for: .normal)
         followButton.backgroundColor = .systemBackground
         followButton.setTitleColor(UIColor(hex: "#1DA1F2"), for: .normal)
         followButton.layer.borderWidth = 2
         followButton.layer.borderColor = UIColor(hex: "#1DA1F2").cgColor
+        followButton.isHidden = false
+        currentFollowState = .userIsFollowed
     }
     
     
-    private func confiureButtonAsUnfollowed() {
+    func configureButtonAsFollow() {
         followButton.setTitle("Follow", for: .normal)
         followButton.backgroundColor = UIColor(hex: "#1DA1F2")
+        followButton.setTitleColor(.white, for: .normal)
         followButton.layer.borderColor = UIColor.clear.cgColor
+        followButton.isHidden = false
+        currentFollowState = .userIsUnfollowed
     }
     
     @objc func didTapButton(_ sender: UIButton) {

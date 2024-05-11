@@ -68,6 +68,7 @@ extension SearchResultsVC: UITableViewDelegate, UITableViewDataSource {
         let user = users[indexPath.row]
         let profileViewModel = ProfileViewModel(user: user)
         let destVC = ProfileVC(viewModel: profileViewModel)
+//        destVC.modalPresentationStyle = .fullScreen
         present(destVC, animated: true)
     }
     
