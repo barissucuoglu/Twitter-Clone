@@ -63,6 +63,7 @@ final class ProfileViewModel: ObservableObject {
 
     }
     
+    
     func unFollow() {
         guard let personalUserID = Auth.auth().currentUser?.uid else { return }
 
@@ -76,6 +77,7 @@ final class ProfileViewModel: ObservableObject {
         }.store(in: &subscription)
 
     }
+    
     
     func getFormattedDate(from date: Date) -> String {
         let dateFormatter = DateFormatter()
@@ -93,6 +95,4 @@ final class ProfileViewModel: ObservableObject {
             self?.tweets = tweets
         }.store(in: &subscription)
     }
-    
-    
 }
